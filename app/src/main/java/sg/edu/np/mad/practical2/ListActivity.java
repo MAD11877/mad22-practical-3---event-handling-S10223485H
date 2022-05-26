@@ -58,5 +58,8 @@ public class ListActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.setTitle("Profile");
         alert.show();
+        /*Extra comment because I had issues pulling and pushing and need to recommit
+        Also the file is called Practical 2 since I copy pasted the files but I do not
+        know how to change the name.*/
     }
 }
