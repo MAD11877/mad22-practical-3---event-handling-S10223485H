@@ -16,10 +16,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent receivingEnd = getIntent();
         User myUser = new User();
-        myUser.setName("MAD");
-        myUser.setDescription("A very long message to fill in the gaps which I have decided not to copy and paste from the original activity as it is not only incredibly long, it is also trapped within the confines of an image preventing the copy and paste.");
-        myUser.setFollowed(false);
+        myUser.setName(receivingEnd.getStringExtra("name"));
+        myUser.setDescription(receivingEnd.getStringExtra("description"));
+        myUser.setFollowed(Boolean.valueOf(receivingEnd.getStringExtra("follow")));
 
         TextView Name = findViewById(R.id.myName);
         Name.setText(myUser.getName());

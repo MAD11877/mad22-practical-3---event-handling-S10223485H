@@ -2,6 +2,8 @@ package sg.edu.np.mad.practical2;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,36 +14,64 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ListActivity extends AppCompatActivity {
-
+    ArrayList<User> userList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        Random ran = new Random();
+        for(int i = 0; i<20; i++){
+            int name = ran.nextInt();
+            int description = ran.nextInt();
+            int follow = ran.nextInt(2);
+            User myUser = new User();
+            myUser.setName("Name" + name);
+            myUser.setDescription("Description " + description);
+            if (follow == 0){
+                myUser.setFollowed(false);
+            }
+            else{
+                myUser.setFollowed(true);
+            }
+            userList.add(myUser);
+        }
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        myAdaptor mAdaptor = new myAdaptor(userList);
+        LinearLayoutManager myLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(myLayoutManager);
+        recyclerView.setAdapter(mAdaptor);
 
         ImageView myImage = findViewById(R.id.imageClick);
 
         myImage.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent){
-                QueryActivity();
+                QueryActivity(userList[0]);
                 return false;
             }
         });
     }
 
-    private void QueryActivity(){
+    private void QueryActivity(User u){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("MADness").setCancelable(false);
         builder.setPositiveButton("View", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Random ran = new Random();
+                /*Random ran = new Random();
                 int value = ran.nextInt();
                 Bundle extras = new Bundle();
-                extras.putString("RanNum", String.valueOf(value));
+                extras.putString("RanNum", String.valueOf(value));*/
+                Bundle extras = new Bundle();
+                extras.putString("name", u.getName());
+                extras.putString("description", u.getDescription());
+                extras.putString("follow", String.valueOf(u.isFollowed()));
 
                 Intent myNewCreate = new Intent(ListActivity.this, MainActivity.class);
                 myNewCreate.putExtras(extras);
