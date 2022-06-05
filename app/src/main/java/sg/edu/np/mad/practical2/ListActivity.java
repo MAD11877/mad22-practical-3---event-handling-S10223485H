@@ -50,9 +50,9 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(myLayoutManager);
         recyclerView.setAdapter(mAdaptor);
 
-        ImageView myImage = findViewById(R.id.imageClick);
+        /*ImageView myImage = findViewById(R.id.imageClick);
 
-        /*myImage.setOnTouchListener(new View.OnTouchListener() {
+        myImage.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent){
                 QueryActivity();
@@ -72,7 +72,7 @@ public class ListActivity extends AppCompatActivity {
 
     private void QueryActivity(User u){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("MADness").setCancelable(false);
+        builder.setMessage(u.getName()).setCancelable(false);
         builder.setPositiveButton("View", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
