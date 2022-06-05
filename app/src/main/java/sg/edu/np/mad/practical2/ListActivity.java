@@ -19,6 +19,8 @@ import java.util.Random;
 
 public class ListActivity extends AppCompatActivity {
     ArrayList<User> userList = new ArrayList<>();
+    private myAdaptor.RecyclerViewClickListener listener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,21 +43,31 @@ public class ListActivity extends AppCompatActivity {
             userList.add(myUser);
         }
 
+        setOnClickListener();
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        myAdaptor mAdaptor = new myAdaptor(userList);
+        myAdaptor mAdaptor = new myAdaptor(userList, listener);
         LinearLayoutManager myLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(myLayoutManager);
         recyclerView.setAdapter(mAdaptor);
 
         ImageView myImage = findViewById(R.id.imageClick);
 
-        myImage.setOnTouchListener(new View.OnTouchListener() {
+        /*myImage.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent){
-                QueryActivity(userList[0]);
+                QueryActivity();
                 return false;
             }
-        });
+        });*/
+    }
+
+    private void setOnClickListener(){
+        listener = new myAdaptor.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                QueryActivity(userList.get(position));
+            }
+        };
     }
 
     private void QueryActivity(User u){
