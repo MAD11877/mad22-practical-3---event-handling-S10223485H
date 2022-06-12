@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "Main Activity";
+    DBHandler dbHandler = new DBHandler(this, null, null, 1);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +38,14 @@ public class MainActivity extends AppCompatActivity {
                 if (myUser.isFollowed() != true) {
                     myFollowButton.setText("Unfollow");
                     myUser.setFollowed(true);
+                    Toast.makeText(MainActivity.this,"Followed",Toast.LENGTH_SHORT).show();
                 }
                 else {
                     myFollowButton.setText("Follow");
                     myUser.setFollowed(false);
+                    Toast.makeText(MainActivity.this,"Unfollowed",Toast.LENGTH_SHORT).show();
                 }
+                dbHandler.updateUser(myUser);
 
             }
         });

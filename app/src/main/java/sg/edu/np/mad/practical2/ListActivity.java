@@ -20,28 +20,32 @@ import java.util.Random;
 public class ListActivity extends AppCompatActivity {
     ArrayList<User> userList = new ArrayList<>();
     private myAdaptor.RecyclerViewClickListener listener;
+    DBHandler dbHandler = new DBHandler(this, null, null, 1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        Random ran = new Random();
-        for(int i = 0; i<20; i++){
+        /*Random ran = new Random();
+        for(int i = 1; i<=20; i++) {
             int name = ran.nextInt();
             int description = ran.nextInt();
             int follow = ran.nextInt(2);
+            int id = i;
             User myUser = new User();
             myUser.setName("Name" + name);
             myUser.setDescription("Description " + description);
-            if (follow == 0){
+            myUser.setId(i);
+            if (follow == 0) {
                 myUser.setFollowed(false);
-            }
-            else{
+            } else {
                 myUser.setFollowed(true);
             }
-            userList.add(myUser);
-        }
+            dbHandler.addUser(myUser);
+        }*/
+
+        userList = dbHandler.getUsers();
 
         setOnClickListener();
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -104,4 +108,5 @@ public class ListActivity extends AppCompatActivity {
         Also the file is called Practical 2 since I copy pasted the files but I do not
         know how to change the name.*/
     }
+
 }
